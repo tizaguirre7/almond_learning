@@ -1,10 +1,11 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Link, useNavigate } from "react-router-dom";
+import { loggedUser } from '../login/login';
+
 
 import  Logo from '../../assets/Almond.png'
-
-import { Login } from "../login/login"
 
 // import { user2 } from "../login/login"
 
@@ -31,7 +32,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function Dashboard({ onLogout } ) {
+export function Dashboard(objectUser) {
+  
+  console.log(objectUser);
 
   return (
     <>
@@ -204,7 +207,6 @@ export function Dashboard({ onLogout } ) {
 
         <hr />
 
-        <Login></Login>
       </div>
     </>
   )

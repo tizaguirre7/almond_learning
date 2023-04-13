@@ -2,7 +2,7 @@
 // import translate from "translate";
 import { useState, useEffect } from 'react';
 import { initializeApp } from "firebase/app";
-import { db } from "../../firebase-config.jsx";
+import { db } from "../../firebase-config";
 import { getFirestore } from "firebase/firestore";
 import { collection} from "firebase/firestore";
 import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
@@ -19,7 +19,7 @@ import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc
     }
 
     //Buscar documentos en language, Word_Type o información concreta de un usuario (Email, nombre etc...)
-    async function getDocByValue(collectionPath, fieldSearch, valueToFind) {
+    export async function getDocByValue(collectionPath, fieldSearch, valueToFind) {
       // El collectionPath es el nombre de la colección inicial que quieres ver (User_db, Language o Word_Type), la uid
       // Es el id del documento a buscar, el fieldSearch es el nombre del campo del documento y el valueToFind es el valor
       // Del campo que queremos buscar para que nos devuelva el documento entero 
@@ -54,11 +54,10 @@ import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc
       }
     };
 
-    async function getDocuments(collectionPath) {
+    export async function getDocuments(collectionPath) {
       const collectionRef = collection(db, collectionPath); // Crear referencia a la colección
       const docsSnapshot = await getDocs(collectionRef); // Obtener todos los documentos de la colección
       const documents = docsSnapshot.docs.map((doc) => {
-        console.log(doc.data());
         return {
           id: doc.id,
           ...doc.data(),
@@ -67,10 +66,9 @@ import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc
       return documents;
     }
 
-    async function deleteDocumentById(collectionPath,docId) {
+    export async function deleteDocumentById(collectionPath,docId) {
       // Fácil, el uid es la id del usuario (El que esta conectado actualmente), luego la colección a la que quermos borrar un documento
       // Y luego le pasamos la id del documento a borrar
-
       try {
         const docRef = doc(collection(db, collectionPath), docId);
         await deleteDoc(docRef);
@@ -80,7 +78,7 @@ import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc
       }
     }
 
-    async function updateCollectionDoc(collectionPath,docId,updateData) {
+    export async function updateCollectionDoc(collectionPath,docId,updateData) {
       //Le pasamos la ruta de la subcolección con la id del documento a actualizar y el objeto (si solo quieres actualizar
       // un solo campo del objeto simplemento crea un objeto con el unico campo que quieres modificar y pasaselo a la función)
       // Esta función no se aplica a las colecciones Language y Word_Type ya que estas son fijas y no se van a cambiar.
