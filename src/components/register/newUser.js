@@ -1,13 +1,13 @@
-import './App.css';
-import translate from "translate";
+// import translate from "translate";
 import { useState, useEffect } from 'react';
 import { initializeApp } from "firebase/app";
+import { db } from "../../firebase-config";
 import { getFirestore } from "firebase/firestore";
 import { collection} from "firebase/firestore";
 import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
 
 async function newUser(email, uid, name, surname, birthdate) {
-    const documentName = "User_db"; //Modificalo para tu documento
+    const documentName = "Users_Database"; //Modificalo para tu documento
 
     try {
       const birthDateTimestamp = Timestamp.fromDate(new Date(birthdate));
@@ -32,10 +32,10 @@ async function newUser(email, uid, name, surname, birthdate) {
     //El usuario quiera añadir el contexto u origen a alguna palabra que quiera guardar.
   }
 
-    const addSubCollection = async (docId, subCollId, customSubDocId,docValue) => {
+    export const addSubCollection = async (docId, subCollId, customSubDocId,docValue) => {
         try {
         // Aquí cambian User_db por la colección de la base de datos principal
-        const mainCollectionRef = collection(db, "User_db");
+        const mainCollectionRef = collection(db, "Users_Database");
 
         // En este parámetro le indicamos el nombre del documento (el uid del usuario)
         const parentDocRef = doc(mainCollectionRef, docId);

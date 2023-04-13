@@ -1,12 +1,16 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth, db } from "../../firebase-config";
 
 import  Logo from '../../assets/Almond.png'
 
-import { Login } from "../login/login"
+import { userObj } from "../login/login"
 
-// import { user2 } from "../login/login"
+
+// const navigate = useNavigate();
 
 const user1 = {
   name: 'Tom Cook',
@@ -31,18 +35,26 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function Dashboard({ onLogout } ) {
+// const handleLogout = async () => {
+//   await signOut(auth);
+//   navigate("/");
+// };
+
+export function Dashboard() {
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate("/");
+  };
+
+  console.log(userObj.id);
+  const userDashboard = userObj.data();
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      */}
+      
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-blue-900 h-28">
           {({ open }) => (
@@ -191,20 +203,19 @@ export function Dashboard({ onLogout } ) {
           )}
         </Disclosure>
 
-        {/* <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
-          </div>
-        </header> */}
+        
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{/* Your content */}</div>
         </main>
 
-        <h1>bienvenido </h1>
+        <h1>bienvenido {userDashboard.name}</h1>
+
+        <br /><br /><br /><br /><br /><br />
+
+        <button onClick={handleLogout}>Sign out</button>
 
         <hr />
 
-        <Login></Login>
       </div>
     </>
   )

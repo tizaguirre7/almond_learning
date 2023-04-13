@@ -12,6 +12,8 @@ import { doc, setDoc } from "firebase/firestore";
 
 import { addDocToCollection } from "../crud/GeneralCRUD.js";
 
+import { addSubCollection } from './newUser.js'
+
 export function Register() {
 	const navigate = useNavigate();
 
@@ -28,7 +30,11 @@ export function Register() {
 
 	async function createUserRegistration(uid, email, name, surname, date) {
 		const userRef = doc(db, "Users_Database", uid); // create a document reference with user ID as document ID
-		await setDoc(userRef, { name: name, surname: surname, birthDate: date, email: email }); // set the document data with user's email
+		await setDoc(userRef, { name: name, surname: surname, birthDate: date, email: email });
+		 // set the document data with user's email
+		addSubCollection(uid, "Context", "Default", "default");
+      	addSubCollection(uid, "Source", "Default", "default");
+      	addSubCollection(uid, "Words", "Default", "default");
 	}
 
 	const register = async () => {

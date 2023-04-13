@@ -7,12 +7,13 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../../firebase-config";
 import { Link, useNavigate } from "react-router-dom";
+import { getDoc, doc } from "firebase/firestore";
 
 import almondImage from "../../assets/Almond.png";
 
-import { getDocumentById } from '../crud/GeneralCRUD';
+import { getDocumentById } from "../crud/GeneralCRUD";
 
-// export const user = user;
+export let userObj;
 
 export function Login() {
 	const navigate = useNavigate();
@@ -22,8 +23,6 @@ export function Login() {
 
 	const [user, setUser] = useState({});
 
-	
-
 	const login = async () => {
 		try {
 			const user = await signInWithEmailAndPassword(
@@ -32,9 +31,23 @@ export function Login() {
 				loginPassword
 			);
 			setUser(user);
-			console.log(user);
-			navigate("/dashboard");
+			
 
+			// Get the Firestore DocumentReference object for the user
+			const userRef = doc(db, "Users_Database", user.user.uid);
+
+			// Fetch the document data using the getDoc() function
+			const docSnap = await getDoc(userRef);
+
+			if (docSnap.exists()) {
+				// const userDoc = docSnap.data();
+				userObj = docSnap;
+				// console.log(userDoc);
+				console.log(userObj);
+				navigate("/dashboard");
+			} else {
+				console.log("No such document!");
+			}
 		} catch (error) {
 			console.log(error.message);
 		}
@@ -42,8 +55,7 @@ export function Login() {
 
 	const handleLogout = async () => {
 		await signOut(auth);
-		navigate('/');
-		
+		navigate("/");
 	};
 
 	return (
@@ -80,7 +92,3 @@ export function Login() {
 		</div>
 	);
 }
-
-// export const user2 = user;
-
-// export const user = user.data();
