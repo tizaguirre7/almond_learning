@@ -17,7 +17,11 @@ import { Dashboard } from "../dashboard/dashboard";
 
 // export const user = user;
 
+<<<<<<< Updated upstream
 export let loggedUser ;
+=======
+export let uid;
+>>>>>>> Stashed changes
 
 export function Login() {
 	const navigate = useNavigate();
@@ -25,24 +29,38 @@ export function Login() {
 	const [loginEmail, setLoginEmail] = useState("");
 	const [loginPassword, setLoginPassword] = useState("");
 
-	const [user, setUser] = useState({});
+	const [loggingUser, setLogginUser] = useState({});
 
 	const login = async () => {
 		try {
+<<<<<<< Updated upstream
 			const signIn_User = await signInWithEmailAndPassword(
+=======
+			const loggingUser = await signInWithEmailAndPassword(
+>>>>>>> Stashed changes
 				auth,
 				loginEmail,
 				loginPassword
 			);
+<<<<<<< Updated upstream
 
 			const userRef = doc(db, "Users_Database", signIn_User.user.uid);
+=======
+			setLogginUser(loggingUser);
+
+			// Get the Firestore DocumentReference object for the user
+			const userRef = doc(db, "Users_Database", loggingUser.user.uid);
+>>>>>>> Stashed changes
 
 			// Fetch the document data using the getDoc() function
 			const docSnap = await getDoc(userRef);
 
 			if (docSnap.exists()) {
+<<<<<<< Updated upstream
 				loggedUser = docSnap.data(); 
 				console.log(loggedUser);
+=======
+>>>>>>> Stashed changes
 				navigate("/dashboard");
 			} else {
 				console.log("No such document!");
@@ -99,7 +117,11 @@ export function Login() {
 			</h5>
 
 			<h4> User Logged In: </h4>
+<<<<<<< Updated upstream
 
+=======
+			{loggingUser?.uid}
+>>>>>>> Stashed changes
 
 			<button onClick={handleLogout}> Sign Out </button>
 
