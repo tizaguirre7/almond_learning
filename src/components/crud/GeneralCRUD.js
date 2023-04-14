@@ -44,7 +44,7 @@ import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc
       const docRef = doc(db, collectionPath, id);
       const docSnapshot = await getDoc(docRef);
       
-      console.log(docSnapshot.data());
+      // console.log(docSnapshot.data());
       if (!docSnapshot.exists()) {
         console.log(`No se ha encontrado ningún documento con el id ${id}.`);
         return null; // No se encontró ningún usuario con el ID especificado

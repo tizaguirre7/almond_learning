@@ -43,7 +43,7 @@ export function Login() {
 				// const userDoc = docSnap.data();
 				userObj = docSnap;
 				// console.log(userDoc);
-				console.log(userObj);
+				// console.log(userObj);
 				navigate("/dashboard");
 			} else {
 				console.log("No such document!");
