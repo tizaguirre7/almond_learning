@@ -3,95 +3,106 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../../firebase-config";
 import { doc, getDocs, collectionGroup, collection, getDoc } from "firebase/firestore";
+import { useAuth } from "../auth/userSession";
 
 import Logo from "../../assets/Almond.png";
 
-import { userObj } from "../login/login";
+import { getDocumentById } from "../crud/GeneralCRUD"
 
 import { Button } from 'react-bootstrap';
 
 export function Dashboard() {
 	const navigate = useNavigate();
-	const userDashboard = userObj.data();
+	
+	const {user, isLoading} = useAuth();
+	const userReference = user;
+	console.log(userReference);
+	
+	// const userObj = getDocumentById("Users_Database", user.id);
+
 
 	const handleLogout = async () => {
 		await signOut(auth);
 		navigate("/");
 	};
 
-	const getLanguages = () => {
-		const userRef = doc(db, "Users_Database", userObj.id);
+	// const getLanguages = () => {
+	// 	const userRef = doc(db, "Users_Database", userObj.id);
 
-		// Get all the words for the user
-		const wordsRef = collection(userRef, "Words");
+	// 	// Get all the words for the user
+	// 	const wordsRef = collection(userRef, "Words");
 
-		// Create an empty object to store the languages and their count
-		const languages = {};
+	// 	// Create an empty object to store the languages and their count
+	// 	const languages = {};
 
-		// Iterate through all the words and count the number of unique languages
-		getDocs(wordsRef).then(async (querySnapshot) => {
-      for (const doc of querySnapshot.docs) {
-        const languageRef = doc.data().language;
-        console.log(doc.data())
-        const languageDoc = await getDoc(languageRef);
-        console.log(languageDoc.data());
-        const language = languageDoc.data().code;
+	// 	// Iterate through all the words and count the number of unique languages
+	// 	getDocs(wordsRef).then(async (querySnapshot) => {
+    //   for (const doc of querySnapshot.docs) {
+    //     const languageRef = doc.data().language;
+    //     console.log(doc.data())
+    //     const languageDoc = await getDoc(languageRef);
+    //     console.log(languageDoc.data());
+    //     const language = languageDoc.data().code;
         
-        if (language in languages) {
-          languages[language] += 1;
-        } else {
-          languages[language] = 1;
-        }
-      }
+    //     if (language in languages) {
+    //       languages[language] += 1;
+    //     } else {
+    //       languages[language] = 1;
+    //     }
+    //   }
       
-      // Get the total count of languages
-      const totalLanguages = Object.keys(languages).length;
+    //   // Get the total count of languages
+    //   const totalLanguages = Object.keys(languages).length;
       
-      // Get the list of languages used by the user
-      const languageList = Object.keys(languages);
+    //   // Get the list of languages used by the user
+    //   const languageList = Object.keys(languages);
       
-      console.log(`Total number of languages used: ${totalLanguages}`);
-      console.log(`List of languages used: ${languageList}`);
-    });
-	};
+    //   console.log(`Total number of languages used: ${totalLanguages}`);
+    //   console.log(`List of languages used: ${languageList}`);
+    // });
+	// };
 
-	getLanguages();
+	// getLanguages();
 	// console.log(userObj);
 	// console.log(userDashboard);
 
-	return (
-		<>
-			<div className="min-h-full">
-				
-
-				<main>
-					<div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-						{/* Your content */}
-					</div>
-				</main>
-
-				<h1>bienvenido {userDashboard.name}</h1>
-
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-
-				<button onClick={handleLogout}>Sign out</button>
-
-				<Button variant="primary">Primary</Button>{' '}
-				<Button variant="secondary">Secondary</Button>{' '}
-				<Button variant="success">Success</Button>{' '}
-				<Button variant="warning">Warning</Button>{' '}
-				<Button variant="danger">Danger</Button>{' '}
-				<Button variant="info">Info</Button>{' '}
-				<Button variant="light">Light</Button>{' '}
-				
-
-				<hr />
-			</div>
-		</>
-	);
+	if(isLoading){
+		return <p>ta cagando</p>
+	}else{
+		return (
+			<>
+				<div className="min-h-full">
+					
+	
+					<main>
+						<div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+							{/* Your content */}
+						</div>
+					</main>
+	
+					<h1>bienvenido {}</h1>
+	
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+	
+					<button onClick={handleLogout}>Sign out</button>
+	
+					<Button variant="primary">Primary</Button>{' '}
+					<Button variant="secondary">Secondary</Button>{' '}
+					<Button variant="success">Success</Button>{' '}
+					<Button variant="warning">Warning</Button>{' '}
+					<Button variant="danger">Danger</Button>{' '}
+					<Button variant="info">Info</Button>{' '}
+					<Button variant="light">Light</Button>{' '}
+					
+	
+					<hr />
+				</div>
+			</>
+		);
+	}
 }
