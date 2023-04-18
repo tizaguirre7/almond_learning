@@ -11,15 +11,17 @@ import { getDocumentById } from "../crud/GeneralCRUD"
 
 import { Button } from 'react-bootstrap';
 
-export function Dashboard() {
+export function Dashboard(props) {
 	const navigate = useNavigate();
 	
-	const {user, isLoading} = useAuth();
-	const userReference = user;
+	const {user, isLoading} = props;
+	const userReference = user?.uid;
+
 	console.log(userReference);
+
+	
 	
 	// const userObj = getDocumentById("Users_Database", user.id);
-
 
 	const handleLogout = async () => {
 		await signOut(auth);
@@ -68,41 +70,46 @@ export function Dashboard() {
 
 	if(isLoading){
 		return <p>ta cagando</p>
-	}else{
-		return (
-			<>
-				<div className="min-h-full">
-					
-	
-					<main>
-						<div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-							{/* Your content */}
-						</div>
-					</main>
-	
-					<h1>bienvenido {}</h1>
-	
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-	
-					<button onClick={handleLogout}>Sign out</button>
-	
-					<Button variant="primary">Primary</Button>{' '}
-					<Button variant="secondary">Secondary</Button>{' '}
-					<Button variant="success">Success</Button>{' '}
-					<Button variant="warning">Warning</Button>{' '}
-					<Button variant="danger">Danger</Button>{' '}
-					<Button variant="info">Info</Button>{' '}
-					<Button variant="light">Light</Button>{' '}
-					
-	
-					<hr />
-				</div>
-			</>
-		);
 	}
+
+	if(!user){
+		return <p>no estas iniciado</p>
+	}
+
+
+	return (
+		<>
+			<div className="min-h-full">
+				
+
+				<main>
+					<div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+						{/* Your content */}
+					</div>
+				</main>
+
+				<h1>bienvenido {user.email}</h1>
+
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+
+				<button onClick={handleLogout}>Sign out</button>
+
+				<Button variant="primary">Primary</Button>{' '}
+				<Button variant="secondary">Secondary</Button>{' '}
+				<Button variant="success">Success</Button>{' '}
+				<Button variant="warning">Warning</Button>{' '}
+				<Button variant="danger">Danger</Button>{' '}
+				<Button variant="info">Info</Button>{' '}
+				<Button variant="light">Light</Button>{' '}
+				
+
+				<hr />
+			</div>
+		</>
+	);
 }
