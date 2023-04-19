@@ -11,7 +11,7 @@ import { getDoc, doc } from "firebase/firestore";
 
 import almondImage from "../../assets/Almond.png";
 
-import { getDocumentById } from "../crud/GeneralCRUD";
+// import { getDocumentById } from "../crud/GeneralCRUD";
 
 export let userObj;
 
