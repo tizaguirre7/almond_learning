@@ -12,14 +12,10 @@ import { getDocumentById } from "../crud/GeneralCRUD"
 import { Button } from 'react-bootstrap';
 
 export function Dashboard(props) {
-	const navigate = useNavigate();
-	
+	const navigate = useNavigate();	
 	const {user, isLoading} = props;
-	const userReference = user?.uid;
 
-	console.log(userReference);
-
-	
+	console.log(user);
 	
 	// const userObj = getDocumentById("Users_Database", user.id);
 
@@ -68,48 +64,55 @@ export function Dashboard(props) {
 	// console.log(userObj);
 	// console.log(userDashboard);
 
-	if(isLoading){
-		return <p>ta cagando</p>
+	if(!isLoading){
+		const userObj = getDocumentById("Users_Database", user.uid);
+
+
+
+		return (
+			<>
+				<div className="min-h-full">
+					
+	
+					<main>
+						<div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+							{/* Your content */}
+						</div>
+					</main>
+	
+					<h1>bienvenido {user.email}</h1>
+	
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+	
+					<button onClick={handleLogout}>Sign out</button>
+	
+					<Button variant="primary">Primary</Button>{' '}
+					<Button variant="secondary">Secondary</Button>{' '}
+					<Button variant="success">Success</Button>{' '}
+					<Button variant="warning">Warning</Button>{' '}
+					<Button variant="danger">Danger</Button>{' '}
+					<Button variant="info">Info</Button>{' '}
+					<Button variant="light">Light</Button>{' '}
+					
+	
+					<hr />
+				</div>
+			</>
+		);
+	}else{
+		return(
+			<>
+				<h1>cargando</h1>
+			</>
+		);
 	}
 
-	if(!user){
-		return <p>no estas iniciado</p>
-	}
 
 
-	return (
-		<>
-			<div className="min-h-full">
-				
-
-				<main>
-					<div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-						{/* Your content */}
-					</div>
-				</main>
-
-				<h1>bienvenido {user.email}</h1>
-
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-
-				<button onClick={handleLogout}>Sign out</button>
-
-				<Button variant="primary">Primary</Button>{' '}
-				<Button variant="secondary">Secondary</Button>{' '}
-				<Button variant="success">Success</Button>{' '}
-				<Button variant="warning">Warning</Button>{' '}
-				<Button variant="danger">Danger</Button>{' '}
-				<Button variant="info">Info</Button>{' '}
-				<Button variant="light">Light</Button>{' '}
-				
-
-				<hr />
-			</div>
-		</>
-	);
+	
 }

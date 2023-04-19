@@ -5,7 +5,7 @@ import { initializeApp } from "firebase/app";
 import { db } from "../../firebase-config.jsx";
 import { getFirestore } from "firebase/firestore";
 import { collection} from "firebase/firestore";
-import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
+import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
 
     export async function addDocToCollection(collectionPath, data) {
       // El collectionPath es una variable que guarda la referencia o ruta de la colección
@@ -40,25 +40,38 @@ import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc
       }
     }
 
-    export const getDocumentById = async (collectionPath, id) => { 
+    // export async function getDocumentById(collectionPath, id){ 
+      
+    //   const docRef = doc(db, collectionPath, id);
+    //   const docSnapshot = await getDoc(docRef);
+      
+    //   // console.log(docSnapshot.data());
+    //   if (!docSnapshot.exists()) {
+    //     console.log(`No se ha encontrado ningún documento con el id ${id}.`);
+    //     return null; // No se encontró ningún usuario con el ID especificado
+    //   } else {
+    //     return docSnapshot.data();
+    //   }
+    // };
+
+    export async function getDocumentById(collectionPath, id) { 
       const docRef = doc(db, collectionPath, id);
       const docSnapshot = await getDoc(docRef);
       
-      // console.log(docSnapshot.data());
       if (!docSnapshot.exists()) {
         console.log(`No se ha encontrado ningún documento con el id ${id}.`);
-        return null; // No se encontró ningún usuario con el ID especificado
+        return null;
       } else {
-        const documentData = docSnapshot.data();
-        return documentData;
+        return docSnapshot.data();
       }
-    };
+    }
 
-    async function getDocuments(collectionPath) {
+
+
+    export async function getDocuments(collectionPath) {
       const collectionRef = collection(db, collectionPath); // Crear referencia a la colección
       const docsSnapshot = await getDocs(collectionRef); // Obtener todos los documentos de la colección
       const documents = docsSnapshot.docs.map((doc) => {
-        console.log(doc.data());
         return {
           id: doc.id,
           ...doc.data(),
