@@ -29,7 +29,7 @@ export function Dashboard(props) {
 			getDocumentById("Users_Database", user.uid)
 				.then((result) => {
 					setUserLoaded(result);
-					getLanguages();
+					// getLanguages();
 				})
 				.catch((error) => {
 					console.error(error);
@@ -42,40 +42,40 @@ export function Dashboard(props) {
 		navigate("/");
 	};
 
-	const getLanguages = () => {
-		const userRef = doc(db, "Users_Database", user.uid);
+	// const getLanguages = () => {
+	// 	const userRef = doc(db, "Users_Database", user.uid);
 
-		// Get all the words for the user
-		const wordsRef = collection(userRef, "Words");
+	// 	// Get all the words for the user
+	// 	const wordsRef = collection(userRef, "Words");
 
-		// Create an empty object to store the languages and their count
-		const languages = {};
+	// 	// Create an empty object to store the languages and their count
+	// 	const languages = {};
 
-		// Iterate through all the words and count the number of unique languages
-		getDocs(wordsRef).then(async (querySnapshot) => {
-			for (const doc of querySnapshot.docs) {
-				const languageRef = doc.data().language;
-				// console.log(doc.data())
-				const languageDoc = await getDoc(languageRef);
-				// console.log(languageDoc.data());
-				const language = languageDoc.id;
+	// 	// Iterate through all the words and count the number of unique languages
+	// 	getDocs(wordsRef).then(async (querySnapshot) => {
+	// 		for (const doc of querySnapshot.docs) {
+	// 			const languageRef = doc.data().language;
+	// 			// console.log(doc.data())
+	// 			const languageDoc = await getDoc(languageRef);
+	// 			// console.log(languageDoc.data());
+	// 			const language = languageDoc.id;
 
-				if (language in languages) {
-					languages[language] += 1;
-				} else {
-					languages[language] = 1;
-				}
-			}
+	// 			if (language in languages) {
+	// 				languages[language] += 1;
+	// 			} else {
+	// 				languages[language] = 1;
+	// 			}
+	// 		}
 
-			// Get the total count of languages
-			const totalLanguages = Object.keys(languages).length;
+	// 		// Get the total count of languages
+	// 		const totalLanguages = Object.keys(languages).length;
 
-			// Get the list of languages used by the user
-			const languageList = Object.keys(languages);
+	// 		// Get the list of languages used by the user
+	// 		const languageList = Object.keys(languages);
 
-			setUserLanguages(languageList);
-		});
-	};
+	// 		setUserLanguages(languageList);
+	// 	});
+	// };
 
 	if (!isLoading) {
 		// console.log(userLoaded);

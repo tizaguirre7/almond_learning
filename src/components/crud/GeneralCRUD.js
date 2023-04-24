@@ -54,12 +54,12 @@ import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc
     //   }
     // };
 
-    export async function getDocumentById(collectionPath, id) { 
-      const docRef = doc(db, collectionPath, id);
+    export async function getDocumentById(collectionPath) { 
+      const docRef = doc(db, collectionPath);
       const docSnapshot = await getDoc(docRef);
       
       if (!docSnapshot.exists()) {
-        console.log(`No se ha encontrado ningún documento con el id ${id}.`);
+        console.log(`No se ha encontrado ningún documento.`);
         return null;
       } else {
         return docSnapshot.data();
