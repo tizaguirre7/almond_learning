@@ -1,9 +1,12 @@
+@font-face {
+  font-family: "Nunito";
+  src: './assets/fonts/NunitoSans-Regular.ttf'
 
+}
 
 #root {
-  max-width: 1280px;
+ font-family: Nunito;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 

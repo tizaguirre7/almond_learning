@@ -1,0 +1,69 @@
+
+
+nav{
+    padding: 0 !important;
+    height: 6rem !important;
+}
+
+.navbar-brand img{
+    width: 8.5rem !important;
+    height: 5rem !important;
+}
+
+
+
+a{
+    color: white !important;
+}
+
+/*Search input*/
+.search-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.search-click {
+  position: relative;
+  overflow: hidden;
+  height: 40px;
+  width: 35px;
+  padding-left: 30px !important;
+  transition: all 0.5s;
+  border-radius: 10px;
+}
+
+.search-click input {
+  background: transparent;
+  border: 1px solid #ccc;
+  outline: none;
+  position: absolute;
+  width: 300px;
+  height: 50px;
+  left: 0%;
+  padding: 10px 10px 10px 40px; /* added left padding to make space for icon */
+}
+
+.search-click::placeholder {
+  padding-left: 30px; 
+}
+
+.search-icon {
+  position: absolute;
+  top: 13px;
+  left: 10px;
+  font-size: 16px;
+  color: #ccc;
+}
+
+.search-click:focus .search-icon {
+  color: #000;
+}
+
+.search-click:focus {
+  width: 250px;
+  padding-left: 20px;
+}
+
+  
+
+  
