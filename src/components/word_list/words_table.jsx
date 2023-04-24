@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { addDocToCollection } from "../crud/GeneralCRUD";
+import { addDocToCollection,deleteDocumentById } from "./../crud/GeneralCRUD";
 import { auth, db } from "../../firebase-config";
 import { doc, collection ,updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
-
+import {ButtonContext} from "./buttons/addContext"
+import {ButtonSource} from "./buttons/addSource"
+import {ButtonWord} from "./buttons/addWord"
 
 export function Tabla({ datos , contextos, origenes, languages, types, allContexts, allSources, uid }) {
-  const [showModal, setShowModal] = useState(false);
-  const usersDatabaseRef = collection(db, "Users_Database");
-  const contextRef = collection(usersDatabaseRef, uid, "Context");
-  const sourceRef = collection(usersDatabaseRef, uid, "Source");
 
   const modalStyles = {
     display: "flex",
@@ -69,13 +67,11 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
     cursor: "pointer"
   };
 
-  
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
+  const handleDelete = async (id) => {
+    const collectionPath = `Users_Database/${uid}/Words/${id}`;
+    console.log(collectionPath);
+    await deleteDocumentById(collectionPath); 
+    location.reload()
   };
 
   const handleSubmit = (event) => {
@@ -84,19 +80,29 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
     const data = Object.fromEntries(formData.entries());
 
     // Obtener la referencia de contexto seleccionada
-    const contextId = data.context.id;
+    const contextId = data.context;
     console.log(contextId);
-    const contextRef = doc(db, "Users_Database", uid, "Context", contextId.id);
+    const contextRef = doc(db, "Users_Database", uid, "Context", contextId);
     console.log(contextRef)
     data.context = contextRef;
 
     // Obtener la referencia de fuente seleccionada
     const sourceId = data.source;
-    const sourceRef = doc(db, "Users_Database", uid, "Source", sourceId.id);
+    const sourceRef = doc(db, "Users_Database", uid, "Source", sourceId);
     data.source = sourceRef;
 
+    const languageId = data.language;
+    const languageRef = doc(db, "Languages",languageId);
+    data.language = languageRef;
+
+    const typeId = data.type;
+    const typeRef = doc(db, "Word_type", typeId);
+    data.type = typeRef;
+
+    data.mistakes = 0; 
+    data.date = serverTimestamp(); 
+
     addDocToCollection("Users_Database/"+uid+"/Words", data);
-    handleCloseModal();
   }
 
   //--------------------------------------------------------------------------------//
@@ -122,70 +128,19 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
               <td>{contextos[index].value}</td>
               <td>{origenes[index].value}</td>
               <td>Aquí la traducción</td>
+              <td>
+                <button onClick={() => handleEdit(dato.id)}>Editar</button>
+                <button onClick={() => handleDelete(dato.id)}>Eliminar</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <div>
-      <button onClick={handleOpenModal}>Abrir formulario</button>
-      {showModal ? (
-        <div style={modalStyles}>
-          <div style={modalContentStyles}>
-            <span style={closeStyles} onClick={handleCloseModal}>
-              &times;
-            </span>
-            <h2>Add a new word</h2>
-            <form style={formStyles} onSubmit={handleSubmit}>
-            <label style={labelStyles}>
-                Word:<br/>
-                <input style={inputStyles} type="text" name="word" />
-            </label>
-            <label style={labelStyles}>
-                Context:<br/>
-                <select name = "context">
-                {allContexts.map((contexto) => (
-                  <option key={contexto.value} value={doc(db,sourceRef+"/"+contexto.id).path}>{contexto.value}</option>
-                ))}
-                </select>
-            </label>
-            <label style={labelStyles}>
-                Source:<br/>
-                <select name = "source">
-                {allSources.map((source) => (
-                  <option key={source.id} value={doc(db,sourceRef+"/"+source.id).path}>{source.value}</option>
-                ))}
-                </select>
-            </label>
-            <label style={labelStyles}>
-                Language:<br/>
-                <select name = "language">
-                {languages.map((language) => (
-                  <option key={language.value} value={ doc(db,"Language/"+language.id).path}>{language.id}</option>
-                ))}
-                </select>
-            </label>
-
-            <label style={labelStyles}>
-                Type:<br/>
-                <select name = "type">
-                {types.map((type) => (
-                  <option value={doc(db,"Users_Database/"+uid+"/Type/"+type.id).path} key={type.type}>{type.type}</option>
-                ))}
-                </select>
-            </label>
-
-            <label style={labelStyles}>
-                Example:<br/>
-                <textarea name = "example"></textarea>
-            </label>
-              
-              <button style={buttonStyles} type="submit">Enviar</button>
-            </form>
-          </div>
-        </div>
-      ) : null}
-      </div>
+      <ButtonContext uid = {uid}></ButtonContext>
+      <ButtonSource uid = {uid}></ButtonSource>
+      <ButtonWord uid = {uid} allContexts = {allContexts} languages = {languages} allSources = {allSources} types = {types}></ButtonWord>
+      
       </>
     );
   }

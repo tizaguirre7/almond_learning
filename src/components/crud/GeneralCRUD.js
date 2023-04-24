@@ -5,7 +5,7 @@ import { initializeApp } from "firebase/app";
 import { db } from "../../firebase-config.jsx";
 import { getFirestore } from "firebase/firestore";
 import { collection} from "firebase/firestore";
-import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
+import { doc, updateDoc, deleteDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
 
     export async function addDocToCollection(collectionPath, data) {
       // El collectionPath es una variable que guarda la referencia o ruta de la colección
@@ -80,29 +80,26 @@ import { doc, updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc
       return documents;
     }
 
-    async function deleteDocumentById(collectionPath,docId) {
+    export async function deleteDocumentById(collectionPath) {
       // Fácil, el uid es la id del usuario (El que esta conectado actualmente), luego la colección a la que quermos borrar un documento
       // Y luego le pasamos la id del documento a borrar
 
       try {
-        const docRef = doc(collection(db, collectionPath), docId);
+        const docRef = doc(db, collectionPath);
         await deleteDoc(docRef);
-        console.log(`El documento con ID ${docId} fue borrado con éxito.`);
+        console.log(`El documento fue borrado con éxito.`);
       } catch (e) {
         console.error('Error al borrar el documento: ', e);
       }
     }
 
-    async function updateCollectionDoc(collectionPath,docId,updateData) {
+    async function updateCollectionDoc(collectionPath,updateData) {
       //Le pasamos la ruta de la subcolección con la id del documento a actualizar y el objeto (si solo quieres actualizar
       // un solo campo del objeto simplemento crea un objeto con el unico campo que quieres modificar y pasaselo a la función)
       // Esta función no se aplica a las colecciones Language y Word_Type ya que estas son fijas y no se van a cambiar.
       // Por eso no tienen CRUD.
-
-      const collectionRef = collection(db,collectionPath);
       try {
-        const docRef = doc(collectionRef, docId);
-    
+        const docRef = doc(db, collectionPath);
         if (updateData) {
           await updateDoc(docRef, updateData);
           console.log('Documento actualizado correctamente');
