@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { addDocToCollection } from "../crud/GeneralCRUD";
 import { auth, db } from "../../firebase-config";
+import { doc, collection ,updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
+
 
 export function Tabla({ datos , contextos, origenes, languages, types, allContexts, allSources, uid }) {
   const [showModal, setShowModal] = useState(false);
-  const contextRef = db.ref(`Users_Database/${uid}/Context`);
-  const sourceRef = db.ref(`Users_Database/${uid}/Source`);
-  const uniqueContexts = Array.from(new Set(contextos.map((contexto) => contexto.value)));
-  const uniqueSources = Array.from(new Set(origenes.map((origen) => origen.value)));
-
-  
+  const usersDatabaseRef = collection(db, "Users_Database");
+  const contextRef = collection(usersDatabaseRef, uid, "Context");
+  const sourceRef = collection(usersDatabaseRef, uid, "Source");
 
   const modalStyles = {
     display: "flex",
@@ -83,10 +82,21 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
-    console.log(data);
 
-    addDocToCollection("Users_Database//Words",data);
-    handleCloseModal(); 
+    // Obtener la referencia de contexto seleccionada
+    const contextId = data.context.id;
+    console.log(contextId);
+    const contextRef = doc(db, "Users_Database", uid, "Context", contextId.id);
+    console.log(contextRef)
+    data.context = contextRef;
+
+    // Obtener la referencia de fuente seleccionada
+    const sourceId = data.source;
+    const sourceRef = doc(db, "Users_Database", uid, "Source", sourceId.id);
+    data.source = sourceRef;
+
+    addDocToCollection("Users_Database/"+uid+"/Words", data);
+    handleCloseModal();
   }
 
   //--------------------------------------------------------------------------------//
@@ -135,7 +145,7 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
                 Context:<br/>
                 <select name = "context">
                 {allContexts.map((contexto) => (
-                  <option key={contexto.value} value={contextRef.child(contexto.id)}>{contexto}</option>
+                  <option key={contexto.value} value={doc(db,sourceRef+"/"+contexto.id).path}>{contexto.value}</option>
                 ))}
                 </select>
             </label>
@@ -143,7 +153,7 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
                 Source:<br/>
                 <select name = "source">
                 {allSources.map((source) => (
-                  <option key={source} value={sourceRef.child(source.id)}>{source}</option>
+                  <option key={source.id} value={doc(db,sourceRef+"/"+source.id).path}>{source.value}</option>
                 ))}
                 </select>
             </label>
@@ -151,7 +161,7 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
                 Language:<br/>
                 <select name = "language">
                 {languages.map((language) => (
-                  <option key={language.value} value={"Language/"+language.id}>{language.id}</option>
+                  <option key={language.value} value={ doc(db,"Language/"+language.id).path}>{language.id}</option>
                 ))}
                 </select>
             </label>
@@ -160,7 +170,7 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
                 Type:<br/>
                 <select name = "type">
                 {types.map((type) => (
-                  <option value={"Word_type/"+type.type} key={type.type}>{type.type}</option>
+                  <option value={doc(db,"Users_Database/"+uid+"/Type/"+type.id).path} key={type.type}>{type.type}</option>
                 ))}
                 </select>
             </label>
