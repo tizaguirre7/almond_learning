@@ -1,0 +1,51 @@
+
+
+nav{
+    padding: 0 !important;
+    height: 6rem !important;
+}
+
+.navbar-brand img{
+    width: 8.5rem !important;
+    height: 5rem !important;
+}
+
+
+
+a{
+    color: white !important;
+}
+
+/*Search input*/
+.search-click {
+    border: 1px solid #ccc;
+    outline: none;
+    background-size: 22px;
+    background-position: 13px;
+    border-radius: 10px;
+    width: 30px;
+    height: 30px;
+    padding: 18px;
+    transition: all 0.5s;
+  }
+  .search-click:focus {
+    width: 250px;
+    padding-left: 20px;
+  }
+  .search-click {
+    position: relative;
+    overflow: hidden;
+    height: 25px;
+  }
+  .search-click input {
+    background: transparent;
+    border: 1px solid #ccc;
+    outline: none;
+    position: absolute;
+    width: 300px;
+    height: 50px;
+    left: 0%;
+    padding: 10px;
+  }
+
+  

@@ -1,0 +1,17 @@
+.btn-language{
+    background-color: blueviolet !important;
+    width: 10rem !important;
+    height: 4rem !important;
+    font-size: 1.2rem !important;
+    color: white;
+    border: none;
+    border-radius: 0px 10px 0px 10px !important;
+    clip-path: polygon(0 14.00px,14.00px 0,100% 0,100% calc(100% - 14.00px),calc(100% - 14.00px) 100%,0 100%);
+    transition: all 0.25s;
+}
+
+.btn-language:hover,
+.btn-language:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(-0.45em);
+}
