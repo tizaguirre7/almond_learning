@@ -105,7 +105,11 @@ export function Words(props){
                 <h1> Esto es una mierda {}</h1>
                 <h2> NO ME GUSTA TU NOMBRE {}</h2>
 
-                <Tabla datos={userWords} contextos = {userContext} origenes = {userSource} languages = {allLanguages} types = {allTypes} allContexts = {allContexts} allSources = {allSources} uid = {user.uid} ></Tabla>
+                {userWords.length > 0 && userContext.length > 0 && userSource.length > 0 && allLanguages.length > 0 && allTypes.length > 0 && allContexts.length > 0 && allSources.length > 0 ? (
+                <Tabla datos={userWords} contextos={userContext} origenes={userSource} languages={allLanguages} types={allTypes} allContexts={allContexts} allSources={allSources} uid={user.uid} ></Tabla>
+                ) : (
+                <p>No se pueden mostrar los datos debido a información faltante</p>
+                )}
             </>
         )
     }else{
