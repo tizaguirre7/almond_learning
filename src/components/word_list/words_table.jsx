@@ -6,6 +6,8 @@ import {ButtonContext} from "./buttons/addContext"
 import {ButtonSource} from "./buttons/addSource"
 import {ButtonWord} from "./buttons/addWord"
 
+import { Navbar } from "../navbar/navbar";
+
 export function Tabla({ datos , contextos, origenes, languages, types, allContexts, allSources, uid }) {
 
   const modalStyles = {
@@ -79,6 +81,7 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
     console.log(contextos); 
     return (
       <>
+      <Navbar></Navbar>
         <table>
         <thead>
           <tr>
