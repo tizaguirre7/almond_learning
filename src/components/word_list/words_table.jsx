@@ -74,37 +74,6 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
     location.reload()
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-
-    // Obtener la referencia de contexto seleccionada
-    const contextId = data.context;
-    console.log(contextId);
-    const contextRef = doc(db, "Users_Database", uid, "Context", contextId);
-    console.log(contextRef)
-    data.context = contextRef;
-
-    // Obtener la referencia de fuente seleccionada
-    const sourceId = data.source;
-    const sourceRef = doc(db, "Users_Database", uid, "Source", sourceId);
-    data.source = sourceRef;
-
-    const languageId = data.language;
-    const languageRef = doc(db, "Languages",languageId);
-    data.language = languageRef;
-
-    const typeId = data.type;
-    const typeRef = doc(db, "Word_type", typeId);
-    data.type = typeRef;
-
-    data.mistakes = 0; 
-    data.date = serverTimestamp(); 
-
-    addDocToCollection("Users_Database/"+uid+"/Words", data);
-  }
-
   //--------------------------------------------------------------------------------//
 
     console.log(contextos); 

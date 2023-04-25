@@ -1,6 +1,8 @@
 import { getDocumentById, getDocuments } from "../crud/GeneralCRUD";
 import React, { useState, useEffect } from 'react';
 import { Tabla } from "./words_table";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Sources } from "./../source_list/sources"
 
 export function Words(props){
     const {user, isLoading} = props;
@@ -99,19 +101,27 @@ export function Words(props){
     }, [userWords]);
 
     if(!isLoadingPage){  
-
-        return(
-            <>
-                <h1> Esto es una mierda {}</h1>
-                <h2> NO ME GUSTA TU NOMBRE {}</h2>
-
-                {userWords.length > 0 && userContext.length > 0 && userSource.length > 0 && allLanguages.length > 0 && allTypes.length > 0 && allContexts.length > 0 && allSources.length > 0 ? (
-                <Tabla datos={userWords} contextos={userContext} origenes={userSource} languages={allLanguages} types={allTypes} allContexts={allContexts} allSources={allSources} uid={user.uid} ></Tabla>
-                ) : (
-                <p>No se pueden mostrar los datos debido a información faltante</p>
-                )}
-            </>
-        )
+        console.log(allSources);
+        if(allSources != null && user.uid != null){
+            return(
+                <>
+                    <h2> NO ME GUSTA TU NOMBRE {}</h2>
+                    <Link
+                        to = {"/dashboard/list/sources"}
+                        state = {{ allSources: allSources, uid: user.uid }}
+                    >
+                        My Sources
+                    </Link>
+    
+                    {userWords.length > 0 && userContext.length > 0 && userSource.length > 0 && allLanguages.length > 0 && allTypes.length > 0 && allContexts.length > 0 && allSources.length > 0 ? (
+                    <Tabla datos={userWords} contextos={userContext} origenes={userSource} languages={allLanguages} types={allTypes} allContexts={allContexts} allSources={allSources} uid={user.uid} ></Tabla>
+                    ) : (
+                    <p>No se pueden mostrar los datos debido a información faltante</p>
+                    )}
+                </>
+            )
+        }
+        
     }else{
         return(
             <>

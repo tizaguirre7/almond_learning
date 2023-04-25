@@ -75,12 +75,13 @@ export function ButtonSource({uid}){
         setShowModal(false);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async(event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData.entries());
     
-        addDocToCollection("Users_Database/"+uid+"/Source", data);
+        await addDocToCollection("Users_Database/"+uid+"/Source", data);
+        window.location.reload(); 
         handleCloseModal();
       }
 
