@@ -1,16 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Route, Link } from "react-router-dom";
-import { deleteDocumentById,updateCollectionDoc } from '../crud/GeneralCRUD';
+import { deleteDocumentById, updateCollectionDoc } from '../crud/GeneralCRUD';
 import { useState} from 'react';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export function Sources() {
+export function Context() {
   const location = useLocation();
-  const [sources, setSources] = useState(location.state?.allSources ?? []);
+  const [contexts, setContexts] = useState(location.state?.allContexts ?? []);
   const [showModal, setShowModal] = useState(false);
-  const [selectedSource, setSelectedSource] = useState(null);
-  const [isLoadingPage, setLoadingPage] = useState(!sources.length);
+  const [selectedContext, setSelectedContext] = useState(null);
+  const [isLoadingPage, setLoadingPage] = useState(!contexts.length);
   const uid = location.state?.uid ?? '';
   const navigate = useNavigate();
 
@@ -73,28 +73,28 @@ export function Sources() {
     cursor: "pointer"
   };
 
-  useEffect(() => {
-    if (isLoadingPage) {
-      setSources(location.state?.allSources ?? []);
-      setLoadingPage(false);
-    }
-  }, []);
-
-  const handleOpenModal = (source) => {
+  const handleOpenModal = (context) => {
     setShowModal(true);
-    setSelectedSource(source);
+    setSelectedContext(context);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
+  useEffect(() => {
+    if (isLoadingPage) {
+      setContexts(location.state?.allContexts ?? []);
+      setLoadingPage(false);
+    }
+  }, []);
+
   const handleDelete = async (id) => {
-    const collectionPath = `Users_Database/${uid}/Source/${id}`;
+    const collectionPath = `Users_Database/${uid}/Context/${id}`;
     await deleteDocumentById(collectionPath);
-    const allSources = sources.filter((source) => source.id !== id);
-    setSources(allSources);
-    const updatedLocationState = { ...location.state, allSources };
+    const allContexts = contexts.filter((context) => context.id !== id);
+    setContexts(allContexts);
+    const updatedLocationState = { ...location.state, allContexts };
     navigate(location.pathname, { state: updatedLocationState });
   };
 
@@ -105,41 +105,41 @@ export function Sources() {
     const data = Object.fromEntries(formData.entries());
   
     // Actualizar el contexto en la base de datos
-    await updateCollectionDoc("Users_Database/"+uid+"/Source/"+selectedSource.id, data);
+    await updateCollectionDoc("Users_Database/"+uid+"/Context/"+selectedContext.id, data);
   
     // Actualizar la lista de contextos en el estado del componente
-    const updatedSources = sources.map((source) => {
-      if (source.id === selectedSource.id) {
-        return { ...source, ...data };
+    const updatedContexts = contexts.map((context) => {
+      if (context.id === selectedContext.id) {
+        return { ...context, ...data };
       }
-      return source;
+      return context;
     });
-    setSources(updatedSources);
+    setContexts(updatedContexts);
   
     // Actualizar el location.state con la lista de contextos actualizada
-    const updatedLocationState = { ...location.state, allSources: updatedSources };
+    const updatedLocationState = { ...location.state, allContexts: updatedContexts };
     navigate(location.pathname, { state: updatedLocationState });
   
     handleCloseModal();
   }
 
     if(!isLoadingPage){
-        
+        console.log(contexts); 
         return(
             <>
                 <table>
                     <thead>
                         <tr>
-                            <th>Sources</th>
+                            <th>Contexts</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {sources.map((source) => (
-                        <tr key={source.id}>
-                        <td>{source.value}</td>
+                    {contexts.map((context) => (
+                        <tr key={context.id}>
+                        <td>{context.value}</td>
                         <td>
-                            <button onClick={() => handleOpenModal(source)}>Editar</button>
-                            <button onClick={() => handleDelete(source.id)}>Eliminar</button>
+                            <button onClick={() => handleOpenModal(context)}>Editar</button>
+                            <button onClick={() => handleDelete(context.id)}>Eliminar</button>
                         </td>
                         </tr>
                     ))}
@@ -157,7 +157,7 @@ export function Sources() {
                             <form style={formStyles} onSubmit={handleSubmit}>
                             <label style={labelStyles}>
                                 Context:<br/>
-                                <input style={inputStyles} type="text" name="value" defaultValue={selectedSource.value} />
+                                <input style={inputStyles} type="text" name="value" defaultValue={selectedContext.value} />
                             </label>
                             <button style={buttonStyles} type="submit">Enviar</button>
                             </form>

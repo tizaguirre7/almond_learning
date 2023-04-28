@@ -9,6 +9,7 @@ import { Dashboard } from "./components/dashboard/dashboard"
 import { useAuth } from "./components/auth/userSession"
 import { Words } from "./components/word_list/words"
 import { Sources } from "./components/source_list/sources"
+import { Context } from "./components/context_list/contexts"
  
 function App() {
   const {user, isLoading} = useAuth();
@@ -21,7 +22,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard user = {user} isLoading = {isLoading}/>}/>
         <Route path="/dashboard/list" element={<Words user = {user} isLoading = {isLoading}/>}/>
         <Route path="/dashboard/list/sources" element={<Sources/>}/>
-        <Route path="/dashboard/list/context" element={<Sources/>}/>
+        <Route path="/dashboard/list/context" element={<Context/>}/>
 			</Routes>
     </div>
   )

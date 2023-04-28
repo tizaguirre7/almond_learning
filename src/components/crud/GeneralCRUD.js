@@ -93,7 +93,7 @@ import { doc, updateDoc, deleteDoc, serverTimestamp ,deleteField, addDoc, Timest
       }
     }
 
-    async function updateCollectionDoc(collectionPath,updateData) {
+    export async function updateCollectionDoc(collectionPath,updateData) {
       //Le pasamos la ruta de la subcolección con la id del documento a actualizar y el objeto (si solo quieres actualizar
       // un solo campo del objeto simplemento crea un objeto con el unico campo que quieres modificar y pasaselo a la función)
       // Esta función no se aplica a las colecciones Language y Word_Type ya que estas son fijas y no se van a cambiar.

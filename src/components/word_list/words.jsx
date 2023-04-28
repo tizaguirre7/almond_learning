@@ -104,7 +104,8 @@ export function Words(props){
 
         return(
             <>
-
+                <Link to="/dashboard/list/sources" state = {{allSources: allSources, uid: user.uid}}>Your Sources</Link>
+                <Link to="/dashboard/list/context" state = {{allContexts: allContexts, uid: user.uid}}>Your Contexts</Link>
                 {userWords.length > 0 && userContext.length > 0 && userSource.length > 0 && allLanguages.length > 0 && allTypes.length > 0 && allContexts.length > 0 && allSources.length > 0 ? (
                 <Tabla datos={userWords} contextos={userContext} origenes={userSource} languages={allLanguages} types={allTypes} allContexts={allContexts} allSources={allSources} uid={user.uid} ></Tabla>
                 ) : (
@@ -119,6 +120,4 @@ export function Words(props){
             </>
         )
     }
-
-    
 }

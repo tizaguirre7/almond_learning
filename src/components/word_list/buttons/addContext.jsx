@@ -81,7 +81,8 @@ export function ButtonContext({uid}){
     
         addDocToCollection("Users_Database/"+uid+"/Context", data);
         handleCloseModal();
-      }
+        window.location.reload(); 
+    }
 
     return(
         <>

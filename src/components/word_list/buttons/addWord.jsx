@@ -81,9 +81,7 @@ export function ButtonWord({ uid, allContexts, languages, allSources, types }){
     
         // Obtener la referencia de contexto seleccionada
         const contextId = data.context;
-        console.log(contextId);
         const contextRef = doc(db, "Users_Database", uid, "Context", contextId);
-        console.log(contextRef)
         data.context = contextRef;
     
         // Obtener la referencia de fuente seleccionada
@@ -104,6 +102,7 @@ export function ButtonWord({ uid, allContexts, languages, allSources, types }){
     
         addDocToCollection("Users_Database/"+uid+"/Words", data);
         handleCloseModal();
+        window.location.reload(); 
     }
 
     return(
