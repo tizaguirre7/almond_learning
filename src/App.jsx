@@ -10,6 +10,8 @@ import { useAuth } from "./components/auth/userSession"
 import { Words } from "./components/word_list/words"
 import { Sources } from "./components/source_list/sources"
 import { Context } from "./components/context_list/contexts"
+import { Filter } from "./components/Games/word_game";
+import { Details } from "./components/word_list/word_details"
  
 function App() {
   const {user, isLoading} = useAuth();
@@ -23,6 +25,8 @@ function App() {
         <Route path="/dashboard/list" element={<Words user = {user} isLoading = {isLoading}/>}/>
         <Route path="/dashboard/list/sources" element={<Sources/>}/>
         <Route path="/dashboard/list/context" element={<Context/>}/>
+        <Route path="/dashboard/list/games" element={<Filter/>}/>
+        <Route path="/dashboard/list/word" element={<Details/>}/>
 			</Routes>
     </div>
   )

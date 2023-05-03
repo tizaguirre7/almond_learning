@@ -1,8 +1,15 @@
 import { getDocumentById, getDocuments } from "../crud/GeneralCRUD";
 import React, { useState, useEffect } from 'react';
 import { Tabla } from "./words_table";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Link, useNavigate } from "react-router-dom";
 import { Sources } from "./../source_list/sources"
+import { db } from "../../firebase-config";
+import {
+	doc,
+	getDocs,
+	collection,
+	getDoc,
+} from "firebase/firestore";
 
 export function Words(props){
     const {user, isLoading} = props;
@@ -14,6 +21,7 @@ export function Words(props){
     const [allTypes, setTypes] = useState([]);
     const [allSources, setSources] = useState([]);
     const [allContexts, setContexts] = useState([]);
+     
 
     useEffect(() => {
         if (!isLoading) {
@@ -106,6 +114,7 @@ export function Words(props){
             <>
                 <Link to="/dashboard/list/sources" state = {{allSources: allSources, uid: user.uid}}>Your Sources</Link>
                 <Link to="/dashboard/list/context" state = {{allContexts: allContexts, uid: user.uid}}>Your Contexts</Link>
+                <Link to="/dashboard/list/games" state = {{allContexts: allContexts, uid: user.uid}}>Games</Link>
                 {userWords.length > 0 && userContext.length > 0 && userSource.length > 0 && allLanguages.length > 0 && allTypes.length > 0 && allContexts.length > 0 && allSources.length > 0 ? (
                 <Tabla datos={userWords} contextos={userContext} origenes={userSource} languages={allLanguages} types={allTypes} allContexts={allContexts} allSources={allSources} uid={user.uid} ></Tabla>
                 ) : (

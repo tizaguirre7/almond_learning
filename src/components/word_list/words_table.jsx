@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { addDocToCollection,deleteDocumentById,updateCollectionDoc } from "./../crud/GeneralCRUD";
 import { auth, db } from "../../firebase-config";
 import { doc, collection ,updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Link, useNavigate } from "react-router-dom";
 import {ButtonContext} from "./buttons/addContext"
 import {ButtonSource} from "./buttons/addSource"
 import {ButtonWord} from "./buttons/addWord"
+import queryString from 'query-string';
 
 import { Navbar } from "../navbar/navbar";
 
 export function Tabla({ datos , contextos, origenes, languages, types, allContexts, allSources, uid }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedWord, setSelectedWord] = useState(null);
+  const navigate = useNavigate(); 
 
   const modalStyles = {
     display: "flex",
@@ -124,6 +126,11 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
       window.location.reload(); 
   }
 
+  function handleDetails(dato){
+    const query = queryString.stringify({ word: dato.id, uid: uid});
+    navigate(`/dashboard/list/word?${query}`);
+  }
+
 
   //--------------------------------------------------------------------------------//
 
@@ -152,6 +159,7 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
               <td>
                 <button onClick={() => handleEdit(dato,dato.id)}>Editar</button>
                 <button onClick={() => handleDelete(dato.id)}>Eliminar</button>
+                <button onClick={() => handleDetails(dato)}>Detalles</button>
               </td>
             </tr>
           ))}
@@ -220,7 +228,6 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
       <ButtonContext uid = {uid}></ButtonContext>
       <ButtonSource uid = {uid}></ButtonSource>
       <ButtonWord uid = {uid} allContexts = {allContexts} languages = {languages} allSources = {allSources} types = {types}></ButtonWord>
-      
       </>
     );
   }

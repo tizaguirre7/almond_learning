@@ -2,12 +2,10 @@ import "./dashboard.css";
 import { Fragment } from "react";
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth, db } from "../../firebase-config";
+import { db } from "../../firebase-config";
 import {
 	doc,
 	getDocs,
-	collectionGroup,
 	collection,
 	getDoc,
 } from "firebase/firestore";
