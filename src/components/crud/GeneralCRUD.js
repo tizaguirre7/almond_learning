@@ -19,7 +19,7 @@ import { doc, updateDoc, deleteDoc, serverTimestamp ,deleteField, addDoc, Timest
     }
 
     //Buscar documentos en language, Word_Type o información concreta de un usuario (Email, nombre etc...)
-    async function getDocByValue(collectionPath, fieldSearch, valueToFind) {
+    export async function getDocByValue(collectionPath, fieldSearch, valueToFind) {
       // El collectionPath es el nombre de la colección inicial que quieres ver (User_db, Language o Word_Type), la uid
       // Es el id del documento a buscar, el fieldSearch es el nombre del campo del documento y el valueToFind es el valor
       // Del campo que queremos buscar para que nos devuelva el documento entero 
@@ -28,10 +28,10 @@ import { doc, updateDoc, deleteDoc, serverTimestamp ,deleteField, addDoc, Timest
         const querySnapshot = await getDocs(
           query(collection(db, collectionPath), where(fieldSearch, '==', valueToFind))
         );
-        const matchingDoc = querySnapshot.docs[0];
+        const matchingDoc = querySnapshot.docs;
         if (matchingDoc) {
           console.log('Valor encontrado: ', matchingDoc.id);
-          return matchingDoc.id;
+          return matchingDoc;
         } else {
           console.log(`No hay ningún documento con el valor ${valueToFind}.`);
         }

@@ -4,6 +4,8 @@ import { deleteDocumentById, updateCollectionDoc } from '../crud/GeneralCRUD';
 import { useState} from 'react';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Navbar } from "../navbar/navbar";
+
 
 export function Context() {
   const location = useLocation();
@@ -124,9 +126,9 @@ export function Context() {
   }
 
     if(!isLoadingPage){
-        console.log(contexts); 
         return(
             <>
+              <Navbar></Navbar>
                 <table>
                     <thead>
                         <tr>

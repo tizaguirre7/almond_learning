@@ -1,18 +1,20 @@
-import { getDocumentById, getDocuments } from "../crud/GeneralCRUD";
+import { getDocumentById, getDocuments, getDocByValue } from "../crud/GeneralCRUD";
 import React, { useState, useEffect } from 'react';
 import { Tabla } from "./words_table";
-import { BrowserRouter, Route, Link, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Link, useNavigate, useLocation } from "react-router-dom";
 import { Sources } from "./../source_list/sources"
 import { db } from "../../firebase-config";
-import {
-	doc,
-	getDocs,
-	collection,
-	getDoc,
-} from "firebase/firestore";
+import { doc, collection , updateDoc, deleteDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
+import { Navbar } from "../navbar/navbar";
+import queryString from 'query-string';
+
 
 export function Words(props){
     const {user, isLoading} = props;
+    const location = useLocation(); 
+    const { search } = useLocation();
+    const { language } = queryString.parse(search);
+    const languageValue = language || null;
     const [userWords, setUserWords] = useState([]);
     const [userContext, setUserContext] = useState([]);
     const [userSource, setUserSource] = useState([]);
@@ -24,16 +26,31 @@ export function Words(props){
      
 
     useEffect(() => {
-        if (!isLoading) {
-            getDocuments("Users_Database/" + user.uid + "/Words")
-            .then((result) => {
-              setUserWords(result);
-            })
-            .catch((error) => {
-              console.error(error);
-            })
+        if(!isLoading){
+            if(languageValue != null){
+                const queryWords = async () => {
+                    const languageReference = doc(db, 'Languages',languageValue);
+                    const q = query(collection(db, "Users_Database",user.uid,"Words"), where("language", "==", languageReference));
+                    const querySnapshot = await getDocs(q);
+                    let words = [];
+                    querySnapshot.forEach((doc) => {
+                    words.push({ id: doc.id, ...doc.data() });
+                    });
+                    setUserWords(words); 
+                }
+                queryWords();
+                
+            }else{
+                getDocuments("Users_Database/" + user.uid + "/Words")
+                .then((result) => {
+                setUserWords(result);
+                })
+                .catch((error) => {
+                console.error(error);
+                })
+            }
         }
-      }, [user]);
+    }, [user]);
 
       useEffect(() => {
         if(userWords.length > 0){
@@ -112,6 +129,7 @@ export function Words(props){
 
         return(
             <>
+                <Navbar></Navbar>
                 <Link to="/dashboard/list/sources" state = {{allSources: allSources, uid: user.uid}}>Your Sources</Link>
                 <Link to="/dashboard/list/context" state = {{allContexts: allContexts, uid: user.uid}}>Your Contexts</Link>
                 <Link to="/dashboard/list/games" state = {{allContexts: allContexts, uid: user.uid}}>Games</Link>

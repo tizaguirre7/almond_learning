@@ -3,6 +3,7 @@ import { addDocToCollection,deleteDocumentById,updateCollectionDoc,getDocumentBy
 import { auth, db } from "../../firebase-config";
 import { doc, collection ,updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
 import { BrowserRouter, Route, Link, useLocation } from "react-router-dom";
+import { Navbar } from "../navbar/navbar";
 import queryString from 'query-string';
 
 export function Details(){ 
@@ -52,12 +53,24 @@ export function Details(){
     if(!isLoadingPage){
       return(
         <>
-          <h1>{wordDetails.word}</h1>
-          <h1>Source: {wordContext.value}</h1>
-          <h1>Context: {wordSource.value}</h1>
-          <h1>Language: {wordDetails.language.id}</h1>
-          <h1>Example: {wordDetails.example}</h1>
-          <h1>Type: {wordDetails.type.id}</h1>
+        <Navbar></Navbar>
+          <div className="container my-5">
+            <h1 className="display-4">{wordDetails.word}</h1>
+            <hr className="my-4" />
+            <div className="row">
+          <div className="col-lg-6">
+            <h2>Details</h2>
+            <p><strong>Language:</strong> {wordDetails.language.id}</p>
+            <p><strong>Example:</strong> {wordDetails.example}</p>
+            <p><strong>Type:</strong> {wordDetails.type.id}</p>
+          </div>
+          <div className="col-lg-6">
+            <h2>Source</h2>
+            <p><strong>Context:</strong> {wordContext.value}</p>
+            <p><strong>Source:</strong> {wordSource.value}</p>
+          </div>
+        </div>
+      </div>
         </>
       );
     }else{

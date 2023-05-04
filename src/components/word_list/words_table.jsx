@@ -137,7 +137,6 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
     console.log(contextos); 
     return (
       <>
-      <Navbar></Navbar>
         <table>
         <thead>
           <tr>

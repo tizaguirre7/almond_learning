@@ -11,6 +11,8 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "../auth/userSession";
 
+import queryString from 'query-string';
+
 import { Navbar } from "../navbar/navbar";
 
 import Logo from "../../assets/Almond.png";
@@ -69,9 +71,17 @@ export function Dashboard(props) {
 			// Get the list of languages used by the user
 			const languageList = Object.keys(languages);
 
+			console.log(languages);
+
 			setUserLanguages(languageList);
 		});
 	};
+
+	function filterLanguage(language){
+		const query = queryString.stringify({ language: language });
+		navigate(`/dashboard/list?${query}`);
+	}
+
 
 	if (!isLoading) {
 		return (
@@ -97,20 +107,13 @@ export function Dashboard(props) {
 					<Row xs={1} sm={2} md={3} lg={4} className="g-4">
 						{userLanguages.map((language, index) => (
 							<Col key={index}>
-								<Button
-									className="btn-language"
-									variant="primary"
-								>
+								<Button className="btn-language" variant="primary" onClick = {() => filterLanguage(language)}>
 									<span className="span-flag">
-										<img
-											className="flag-icon"
-											src={
-												"https://res.cloudinary.com/tomas0707/image/upload/v1682331388/Almond%20Learning/languages/" +
-												language +
-												".png"
-											}
-											alt=""
-										/>
+									<img
+										className="flag-icon"
+										src={`https://res.cloudinary.com/tomas0707/image/upload/v1682331388/Almond%20Learning/languages/${language}.png`}
+										alt=""
+									/>
 									</span>
 									{language}
 								</Button>
