@@ -3,15 +3,10 @@ import { Fragment } from "react";
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { db } from "../../firebase-config";
-import {
-	doc,
-	getDocs,
-	collection,
-	getDoc,
-} from "firebase/firestore";
+import { doc, getDocs, collection, getDoc } from "firebase/firestore";
 import { useAuth } from "../auth/userSession";
 
-import queryString from 'query-string';
+import queryString from "query-string";
 
 import { Navbar } from "../navbar/navbar";
 
@@ -20,12 +15,14 @@ import Logo from "../../assets/Almond.png";
 import { getDocumentById } from "../crud/GeneralCRUD";
 
 import { Button, Row, Col } from "react-bootstrap";
+import { Loader } from "../loader/loader";
 
 export function Dashboard(props) {
 	const navigate = useNavigate();
 	const { user, isLoading } = props;
 	const [userLoaded, setUserLoaded] = useState({});
 	const [userLanguages, setUserLanguages] = useState([]);
+	const [languagesLoaded, setLanguagesLoaded] = useState(true);
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -74,14 +71,14 @@ export function Dashboard(props) {
 			console.log(languages);
 
 			setUserLanguages(languageList);
+			setLanguagesLoaded(false);
 		});
 	};
 
-	function filterLanguage(language){
+	function filterLanguage(language) {
 		const query = queryString.stringify({ language: language });
 		navigate(`/dashboard/list?${query}`);
 	}
-
 
 	if (!isLoading) {
 		return (
@@ -104,27 +101,38 @@ export function Dashboard(props) {
 						</Link>
 					</h5>
 					<br />
-					<Row xs={1} sm={2} md={3} lg={4} className="g-4">
-						{userLanguages.map((language, index) => (
-							<Col key={index}>
-								<Button className="btn-language" variant="primary" onClick = {() => filterLanguage(language)}>
-									<span className="span-flag">
-									<img
-										className="flag-icon"
-										src={`https://res.cloudinary.com/tomas0707/image/upload/v1682331388/Almond%20Learning/languages/${language}.png`}
-										alt=""
-									/>
-									</span>
-									{language}
+					{languagesLoaded ? (
+						<Loader></Loader>
+					) : (
+						<Row xs={1} sm={2} md={3} lg={4} className="g-4">
+							{userLanguages.map((language, index) => (
+								<Col key={index}>
+									<Button
+										className="btn-language"
+										variant="primary"
+										onClick={() => filterLanguage(language)}
+									>
+										<span className="span-flag">
+											<img
+												className="flag-icon"
+												src={`https://res.cloudinary.com/tomas0707/image/upload/v1682331388/Almond%20Learning/languages/${language}.png`}
+												alt=""
+											/>
+										</span>
+										{language}
+									</Button>
+								</Col>
+							))}
+							<Col>
+								<Button
+									className="btn-language"
+									variant="primary"
+								>
+									+
 								</Button>
 							</Col>
-						))}
-						<Col>
-							<Button className="btn-language" variant="primary">
-								+
-							</Button>
-						</Col>
-					</Row>
+						</Row>
+					)}
 					<br />
 					<br />
 				</div>
@@ -133,7 +141,7 @@ export function Dashboard(props) {
 	} else {
 		return (
 			<>
-				<h1>cargando</h1>
+				<Loader></Loader>
 			</>
 		);
 	}

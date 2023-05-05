@@ -8,7 +8,11 @@ import {ButtonSource} from "./buttons/addSource"
 import {ButtonWord} from "./buttons/addWord"
 import queryString from 'query-string';
 
-import { Navbar } from "../navbar/navbar";
+import { translateText } from "../translation/translation"
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+
 
 export function Tabla({ datos , contextos, origenes, languages, types, allContexts, allSources, uid }) {
   const [showModal, setShowModal] = useState(false);
@@ -74,6 +78,9 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
     cursor: "pointer"
   };
 
+  //traducionessssssssssssssssssssssssssssssss
+  const [translations, setTranslations] = useState([]);
+
   const handleOpenModal = () => {
     setShowModal(true);
   };
@@ -131,10 +138,20 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
     navigate(`/dashboard/list/word?${query}`);
   }
 
+  useEffect(() => {
+    const translationsPromises = datos.map(dato => {
+      return translateText(dato.word, "es");
+    });
+
+    Promise.all(translationsPromises).then(translations => {
+      setTranslations(translations);
+    });
+  }, [datos]);
+
+  console.log(datos)
 
   //--------------------------------------------------------------------------------//
-
-    console.log(contextos); 
+  
     return (
       <>
         <table>
@@ -145,6 +162,7 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
             <th>Context</th>
             <th>Source</th>
             <th>Translation</th>
+            <th>Speak</th>
           </tr>
         </thead>
         <tbody>
@@ -154,7 +172,8 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
               <td>{new Date(dato.date.seconds * 1000).toLocaleString()}</td>
               <td>{contextos[index].value}</td>
               <td>{origenes[index].value}</td>
-              <td>Aquí la traducción</td>
+              <td>{translations[index]}</td>
+              <td>hablar</td>
               <td>
                 <button onClick={() => handleEdit(dato,dato.id)}>Editar</button>
                 <button onClick={() => handleDelete(dato.id)}>Eliminar</button>

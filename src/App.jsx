@@ -8,6 +8,8 @@ import { Register } from "./components/register/register"
 import { Dashboard } from "./components/dashboard/dashboard"
 import { useAuth } from "./components/auth/userSession"
 import { Words } from "./components/word_list/words"
+import { Loader } from './components/loader/loader';
+
 import { Sources } from "./components/source_list/sources"
 import { Context } from "./components/context_list/contexts"
 import { Filter } from "./components/Games/word_game";
@@ -27,6 +29,7 @@ function App() {
         <Route path="/dashboard/list/context" element={<Context/>}/>
         <Route path="/dashboard/list/games" element={<Filter/>}/>
         <Route path="/dashboard/list/word" element={<Details/>}/>
+        <Route path="/loading" element={<Loader />}/>
 			</Routes>
     </div>
   )

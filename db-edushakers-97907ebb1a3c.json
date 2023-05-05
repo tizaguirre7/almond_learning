@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "db-edushakers",
+  "private_key_id": "97907ebb1a3c88161b6fa86958436dabae774900",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCyE72+a9gsvQxp\nHUxA1WMWpIRYrpvcXjjXpnuVJAdZCDX/+E6NLna98NZMVH6gjWYqFMZ7DBo8TP8v\n9t+fM08MV8tISzqeMsg2YuwTApm0hXYmy/LLx9YU2BJgysvqotURyBIXqM0UYlve\nspTTUzqFENluyqnWKD+k2L8YEPtG1l194mqZtS4eM9mJG31ILZxhJtiBTzobyROu\nd1+Z9GYbeE4b7PP4EaNiYNcJR7OR3OKqSues0J8RuqooccKIH+Ldbmrx7QhGvr0q\nGf2RLETwvxda3J/gXZBAEYI8jq+qOuLpFEyJs17Vm/vdRqsXJEl1HsEMwvdzKH72\nO+UEZKt7AgMBAAECggEAFioI2tOXc3IQQmEIJaWpkJ7nbhZFhfcgQg8RoK18UKOJ\n/RMNy9q1osyAD74QiLEwvxoY3iXSeiDnPjQO/0SmmRWwUo4yfJA7hTFoyrDvKp3V\n59xImv6DcdK27t8u5ERiGrV5MwKqi9f2MVCu32KjjP5c4cJNwz79NOpZVoh+jgFZ\nHl5xETwCjdflvBv+d4QaY1dzaxdgLYh6vpGIN80zV+IJevPf2MnBWPwbmecbyQBD\nm/Uz+zlszXnR1Xq+BwnFy99/Px3gfxrskfnYFgyu2TOO67/SFPC6x7PWzc1XHeEe\nq8ZRYlvoGu3AkgfmmH4zZ/6ztW5v1F4+PekrKB7DMQKBgQDjVv2vvsLBYskuEdlt\nqGLVJVmJKteMjqW913M0xV46UOnqwavUxQHEQK289I80WK17EdCKm68MZuOvnPRq\nsm+0jyBiDQbOOzdfa5RIALKj8CiKEjJBEiipmtWH1H81N03WAl3Bpln4WXzrW9KU\nLKU5d5IgUzQAztiDLXJKDvLm0wKBgQDIhuE7ikmVwXWq3o01NNE3Coi2OqrrcY/q\nYRj7Te+MY4qsYjb9uSW17reya0F3h+UZcTjt/DdyYFB8978jvnhimlbZlD0EEKGV\nA8YjiZv3X/ui3c+Q1tfbHSoy6LsOw2Mprwm8nFFiAIkIalcKIVyzNoIPibFyRRdA\n2xpavOSPuQKBgQCibwNv0NMCrfykqCg8i7WiKb+hnDTKvxl5XTl5mRPMgwe/roWB\nzwmGGdiJTAwOENZTOtVQVBBswg8o6PJSUhAyaJlwtXIJZJIZ4ZnfIHCDZhLxJDM3\n/yuCk5jCJniFo3A/2wz2Uk+yfO4elEsPiB69wstrwUdE1IYqpAwnEitH9QKBgEqw\nQlAE7+eBiSw9fGbm504S9Fy7eVH8mFf6Fm3z11d48/vFESprvaoH4g/odxfoW+Kg\nE05A9P369b+2H1FW7kv7pIGh/x/2edig8TnnVVpMO9OrvlX6T6fjMwaHPLUA/XxX\nH89Kgd14yZGC2iyBxJ9TnBnhdWBUb5bOhQBq/s6xAoGBAK1DRwyMnvnJDgIUKoEi\n2pkeg/n+OolUSMVzf+rcScklvYFFWhYnrYWmu8xQ6Zus4MJLuZOIIieOI++dhQM9\nUktRorjn0fnATw/+00SjPAQHTz2wFgPMZ8wMlDaZ0qZAT9VUoR2wtpL1dHiS/sXG\nNWIf8aWcJnAHm2MulGM6q4si\n-----END PRIVATE KEY-----\n",
+  "client_email": "almondlearningtranslation@db-edushakers.iam.gserviceaccount.com",
+  "client_id": "115510379389680899769",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/almondlearningtranslation%40db-edushakers.iam.gserviceaccount.com"
+}

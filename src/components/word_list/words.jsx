@@ -1,11 +1,12 @@
 import { getDocumentById, getDocuments, getDocByValue } from "../crud/GeneralCRUD";
 import React, { useState, useEffect } from 'react';
 import { Tabla } from "./words_table";
+import { Loader } from '../loader/loader'
+import { Navbar } from "../navbar/navbar";
 import { BrowserRouter, Route, Link, useNavigate, useLocation } from "react-router-dom";
 import { Sources } from "./../source_list/sources"
 import { db } from "../../firebase-config";
 import { doc, collection , updateDoc, deleteDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
-import { Navbar } from "../navbar/navbar";
 import queryString from 'query-string';
 
 
@@ -125,6 +126,8 @@ export function Words(props){
         }
     }, [userWords]);
 
+    // console.log(userWords)
+
     if(!isLoadingPage){  
 
         return(
@@ -136,14 +139,15 @@ export function Words(props){
                 {userWords.length > 0 && userContext.length > 0 && userSource.length > 0 && allLanguages.length > 0 && allTypes.length > 0 && allContexts.length > 0 && allSources.length > 0 ? (
                 <Tabla datos={userWords} contextos={userContext} origenes={userSource} languages={allLanguages} types={allTypes} allContexts={allContexts} allSources={allSources} uid={user.uid} ></Tabla>
                 ) : (
-                <p>No se pueden mostrar los datos debido a información faltante</p>
+                <p></p>
                 )}
             </>
         )
     }else{
         return(
             <>
-                <h1>Cargando Manito</h1>
+                <Navbar></Navbar>
+                <Loader></Loader>
             </>
         )
     }

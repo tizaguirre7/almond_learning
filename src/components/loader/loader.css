@@ -1,0 +1,54 @@
+
+.loader-wrapper {
+   position: fixed;
+   top: 0;
+   left: 0;
+   height: 100vh;
+   width: 100vw;
+   z-index: 9999; /* set a high z-index value to ensure it stays on top of other elements */
+   background-color: rgba(255, 255, 255, 0.2);
+ }
+
+ .containerLoader {
+   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+    /* make sure the content inside the modal is on top of the blurred background */
+ }
+
+.spinner {
+    width: 100px;
+    height: 100px;
+    display: grid;
+    animation: spinner-plncf9 4s infinite;
+ }
+ 
+ .spinner::before,
+ .spinner::after {
+    content: "";
+    grid-area: 1/1;
+    border: 9px solid;
+    border-radius: 50%;
+    border-color: #5b9816 #5b9816 #0000 #0000;
+    mix-blend-mode: darken;
+    animation: spinner-plncf9 1s infinite linear;
+ }
+ 
+ .spinner::after {
+    border-color: #0000 #0000 #e0861f #e0861f;
+    animation-direction: reverse;
+ }
+
+ .img{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+ }
+ 
+ @keyframes spinner-plncf9 {
+    100% {
+       transform: rotate(1turn);
+    }
+ }
