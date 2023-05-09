@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { addDocToCollection } from "./../../crud/GeneralCRUD";
 import { auth, db } from "../../../firebase-config";
 import { doc, collection ,updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
-
+import "./../css/words.css"
+import "./../css/table.css"
 
 export function ButtonContext({uid}){
     const [showModal, setShowModal] = useState(false);
@@ -74,12 +75,12 @@ export function ButtonContext({uid}){
         setShowModal(false);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData.entries());
     
-        addDocToCollection("Users_Database/"+uid+"/Context", data);
+        await addDocToCollection("Users_Database/"+uid+"/Context", data);
         handleCloseModal();
         window.location.reload(); 
     }
@@ -87,7 +88,7 @@ export function ButtonContext({uid}){
     return(
         <>
         <div>
-            <button onClick={handleOpenModal}>Añadir contexto</button>
+            <button class="buttonAdd" onClick={handleOpenModal}>Add context</button>
             {showModal ? (
                 <div style={modalStyles}>
                 <div style={modalContentStyles}>

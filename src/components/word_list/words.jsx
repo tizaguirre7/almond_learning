@@ -4,15 +4,14 @@ import { Tabla } from "./words_table";
 import { Loader } from '../loader/loader'
 import { Navbar } from "../navbar/navbar";
 import { BrowserRouter, Route, Link, useNavigate, useLocation } from "react-router-dom";
-import { Sources } from "./../source_list/sources"
 import { db } from "../../firebase-config";
-import { doc, collection , updateDoc, deleteDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
+import { doc, collection , collectionGroup, updateDoc, deleteDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
 import queryString from 'query-string';
+import "./css/words.css"
 
 
 export function Words(props){
     const {user, isLoading} = props;
-    const location = useLocation(); 
     const { search } = useLocation();
     const { language } = queryString.parse(search);
     const languageValue = language || null;
@@ -24,6 +23,11 @@ export function Words(props){
     const [allTypes, setTypes] = useState([]);
     const [allSources, setSources] = useState([]);
     const [allContexts, setContexts] = useState([]);
+    const [selectedType, setSelectedType] = useState(null);
+    const [selectedContext, setSelectedContext] = useState(null);
+    const [selectedSource, setSelectedSource] = useState(null);
+    const [backUpData, setBackUpData] = useState();
+
      
 
     useEffect(() => {
@@ -38,6 +42,7 @@ export function Words(props){
                     words.push({ id: doc.id, ...doc.data() });
                     });
                     setUserWords(words); 
+                    setBackUpData(words); 
                 }
                 queryWords();
                 
@@ -45,6 +50,7 @@ export function Words(props){
                 getDocuments("Users_Database/" + user.uid + "/Words")
                 .then((result) => {
                 setUserWords(result);
+                setBackUpData(result);
                 })
                 .catch((error) => {
                 console.error(error);
@@ -126,6 +132,50 @@ export function Words(props){
         }
     }, [userWords]);
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+  
+        let q = query(collection(db, "Users_Database", user.uid, "Words"));
+        
+        if (selectedContext != null) {
+            const contextRef = doc(db, "Users_Database", user.uid, "Context", selectedContext);
+            q = query(q, where("context", "==", contextRef));
+        }
+        
+        if (selectedSource != null) {
+            const sourceRef = doc(db, "Users_Database", user.uid, "Source", selectedSource);
+            q = query(q, where("source", "==", sourceRef));
+        }
+        
+        if (selectedType != null) {
+            const typeRef = doc(db, "Word_type", selectedType);
+            q = query(q, where("type", "==", typeRef));
+        }
+
+        if (language != null){
+            const languageRef= doc(db,"Languages",languageValue); 
+            q = query(q, where("language","==",languageRef))
+        }
+        const querySnapshot = await getDocs(q);
+
+        const filteredData = [];
+
+        querySnapshot.forEach((doc) => {
+        const docData = doc.data();
+        docData.id = doc.id;
+        filteredData.push(docData);
+        });
+
+        if(filteredData.length > 0){
+            setUserWords(filteredData);
+            setLoadingPage(true);
+        }
+
+        setSelectedContext(null);
+        setSelectedSource(null);
+        setSelectedType(null);
+    }
+
     // console.log(userWords)
 
     if(!isLoadingPage){  
@@ -133,15 +183,40 @@ export function Words(props){
         return(
             <>
                 <Navbar></Navbar>
-                <Link to="/dashboard/list/sources" state = {{allSources: allSources, uid: user.uid}}>Your Sources</Link>
-                <Link to="/dashboard/list/context" state = {{allContexts: allContexts, uid: user.uid}}>Your Contexts</Link>
-                <Link to="/dashboard/list/games" state = {{allContexts: allContexts, uid: user.uid}}>Games</Link>
+
+                <form class="filter-form" onSubmit={handleSubmit}>
+                <select class="filter-select" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+                    <option disabled defaultValue>Select a Word Type</option>
+                    {allTypes.map((type) => (
+                    <option key={type.type} value={type.id}>{type.type}</option>
+                    ))}
+                </select>
+
+                <select class="filter-select" value={selectedContext} onChange={(e) => setSelectedContext(e.target.value)}>
+                    <option disabled defaultValue>Select a Context</option>
+                    {allContexts.map((context) => (
+                    <option key={context.value} value={context.id}>{context.value}</option>
+                    ))}
+                </select>
+
+                <select class="filter-select" value={selectedSource} onChange={(e) => setSelectedSource(e.target.value)}>
+                    <option disabled defaultValue>Select a Source</option>
+                    {allSources.map((sources) => (
+                    <option key={sources.value} value={sources.id}>{sources.value}</option>
+                    ))}
+                </select>
+
+                <button class="filter-btn" type="submit">Filter</button>
+                </form>
+
+                <Link to="/dashboard/list/sources" class="your-sources-link text-primary" state={{allSources: allSources, uid: user.uid}}>Your Sources</Link>
+                <Link to="/dashboard/list/context" class="your-contexts-link text-primary" state={{allContexts: allContexts, uid: user.uid}}>Your Contexts</Link>
                 {userWords.length > 0 && userContext.length > 0 && userSource.length > 0 && allLanguages.length > 0 && allTypes.length > 0 && allContexts.length > 0 && allSources.length > 0 ? (
                 <Tabla datos={userWords} contextos={userContext} origenes={userSource} languages={allLanguages} types={allTypes} allContexts={allContexts} allSources={allSources} uid={user.uid} ></Tabla>
                 ) : (
                 <p></p>
                 )}
-            </>
+            </> 
         )
     }else{
         return(

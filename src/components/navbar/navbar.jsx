@@ -37,7 +37,7 @@ export function Navbar() {
 	return (
 		<nav className="bg-dark navbar navbar-expand-sm  w-100 m-0 text-light" id="neubar">
 			<div className="container">
-				<a className="navbar-brand" href="#">
+				<a className="navbar-brand" href="/dashboard">
 					<img
 						src={almondImage}
 						height="60"

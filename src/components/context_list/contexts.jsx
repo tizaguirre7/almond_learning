@@ -5,6 +5,8 @@ import { useState} from 'react';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Navbar } from "../navbar/navbar";
+import "./../word_list/css/table.css"
+import "./../word_list/css/words.css"
 
 
 export function Context() {
@@ -129,19 +131,19 @@ export function Context() {
         return(
             <>
               <Navbar></Navbar>
-                <table>
+                <table class="table">
                     <thead>
                         <tr>
-                            <th>Contexts</th>
+                            <th class="table__header">Contexts</th>
                         </tr>
                     </thead>
                     <tbody>
                     {contexts.map((context) => (
                         <tr key={context.id}>
-                        <td>{context.value}</td>
+                        <td class="table__cell">{context.value}</td>
                         <td>
-                            <button onClick={() => handleOpenModal(context)}>Editar</button>
-                            <button onClick={() => handleDelete(context.id)}>Eliminar</button>
+                            <button class="buttonActionsSmaller" onClick={() => handleOpenModal(context)}>Editar</button>
+                            <button class="buttonActionsSmaller" onClick={() => handleDelete(context.id)}>Eliminar</button>
                         </td>
                         </tr>
                     ))}

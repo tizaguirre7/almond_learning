@@ -5,6 +5,8 @@ import { useState} from 'react';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Navbar } from "../navbar/navbar";
+import "./../word_list/css/table.css"
+import "./../word_list/css/words.css"
 
 
 export function Sources() {
@@ -130,19 +132,19 @@ export function Sources() {
         return(
             <>
             <Navbar></Navbar>
-                <table>
+                <table class="table">
                     <thead>
-                        <tr>
+                        <tr class="table__header">
                             <th>Sources</th>
                         </tr>
                     </thead>
                     <tbody>
                     {sources.map((source) => (
                         <tr key={source.id}>
-                        <td>{source.value}</td>
+                        <td class="table__cell">{source.value}</td>
                         <td>
-                            <button onClick={() => handleOpenModal(source)}>Editar</button>
-                            <button onClick={() => handleDelete(source.id)}>Eliminar</button>
+                            <button class="buttonActionsSmaller" onClick={() => handleOpenModal(source)}>Editar</button>
+                            <button class="buttonActionsSmaller" onClick={() => handleDelete(source.id)}>Eliminar</button>
                         </td>
                         </tr>
                     ))}

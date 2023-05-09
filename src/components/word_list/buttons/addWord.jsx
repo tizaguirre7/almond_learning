@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { addDocToCollection } from "./../../crud/GeneralCRUD";
 import { auth, db } from "../../../firebase-config";
 import { doc, collection ,updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
-
+import "./../css/words.css"
 
 export function ButtonWord({ uid, allContexts, languages, allSources, types }){
     const [showModal, setShowModal] = useState(false);
@@ -74,7 +74,7 @@ export function ButtonWord({ uid, allContexts, languages, allSources, types }){
         setShowModal(false);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData.entries());
@@ -100,7 +100,7 @@ export function ButtonWord({ uid, allContexts, languages, allSources, types }){
         data.mistakes = 0; 
         data.date = serverTimestamp(); 
     
-        addDocToCollection("Users_Database/"+uid+"/Words", data);
+        await addDocToCollection("Users_Database/"+uid+"/Words", data);
         handleCloseModal();
         window.location.reload(); 
     }
@@ -108,7 +108,7 @@ export function ButtonWord({ uid, allContexts, languages, allSources, types }){
     return(
         <>
         <div>
-            <button onClick={handleOpenModal}>Abrir formulario</button>
+            <button class = "buttonAdd" onClick={handleOpenModal}>Add word</button>
             {showModal ? (
                 <div style={modalStyles}>
                 <div style={modalContentStyles}>

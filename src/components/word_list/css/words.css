@@ -1,0 +1,97 @@
+.filter-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 30%;
+    margin-bottom: 10px;
+  }
+  
+  .filter-select {
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    color: #555;
+    background-color: #fff;
+  }
+  
+  .filter-btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+  }
+  
+  .your-sources-link,
+  .your-contexts-link {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+    border-bottom: 1px solid #007bff;
+    padding-bottom: 2px;
+  }
+  
+  .your-sources-link:hover,
+  .your-contexts-link:hover {
+    color: #0056b3;
+    border-bottom-color: #0056b3;
+  }
+
+  .buttonActions {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    width: 25%;
+    margin-left: 10px;
+  }
+  
+  .buttonActions:hover {
+    background-color: #3e8e41;
+  }
+
+  .buttonAdd {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .buttonAdd:hover {
+    background-color: #0056b3;
+  }
+
+  .containerButtons {
+    margin-right: 1%;
+  }
+
+  .container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .buttonActionsSmaller {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    width: 15%;
+    margin-left: 10px;
+  }
+  .buttonActionsSmaller:hover {
+    background-color: #3e8e41;
+  }

@@ -12,7 +12,7 @@
       }),
     });
     const jsonResponse = await response.json();
-    // console.log(jsonResponse.data.translations[0].translatedText)
+
     const translation = jsonResponse.data.translations[0].translatedText;
     try{
       return translation;

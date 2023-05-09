@@ -7,6 +7,7 @@ import {
 import { db } from "../../firebase-config.jsx";
 import { auth } from "../../firebase-config";
 import { Link, useNavigate } from "react-router-dom";
+import "./register.css"
 
 import { doc, setDoc } from "firebase/firestore";
 
@@ -75,48 +76,51 @@ export function Register() {
 	// };
 
 	return (
-		<div>
-			<h3> Register User </h3>
-			<input
-				placeholder="Name..."
-				onChange={(event) => {
-					setRegisterName(event.target.value);
-				}}
-			/>
-			<br />
-			<input
-				placeholder="Surname..."
-				onChange={(event) => {
-					setRegisterSurname(event.target.value);
-				}}
-			/>
-			<br />
-			<input
-				type="date"
-				placeholder="Password..."
-				onChange={(event) => {
-					setRegisterDate(event.target.value);
-				}}
-			/>
-			<br />
-			<input
-				placeholder="Email..."
-				onChange={(event) => {
-					setRegisterEmail(event.target.value);
-				}}
-			/>
-			<br />
-			<input
-				type="password"
-				placeholder="Password..."
-				onChange={(event) => {
-					setRegisterPassword(event.target.value);
-				}}
-			/>
-			<br />
-			
-
-			<button onClick={register}> Create User</button>
+		<div className="register-form">
+		<h3> Register User </h3>
+		<input
+			className="register-input"
+			placeholder="Name..."
+			onChange={(event) => {
+			setRegisterName(event.target.value);
+			}}
+		/>
+		<br />
+		<input
+			className="register-input"
+			placeholder="Surname..."
+			onChange={(event) => {
+			setRegisterSurname(event.target.value);
+			}}
+		/>
+		<br />
+		<input
+			className="register-input"
+			type="date"
+			placeholder="Password..."
+			onChange={(event) => {
+			setRegisterDate(event.target.value);
+			}}
+		/>
+		<br />
+		<input
+			className="register-input"
+			placeholder="Email..."
+			onChange={(event) => {
+			setRegisterEmail(event.target.value);
+			}}
+		/>
+		<br />
+		<input
+			className="register-input"
+			type="password"
+			placeholder="Password..."
+			onChange={(event) => {
+			setRegisterPassword(event.target.value);
+			}}
+		/>
+		<br />
+		<button className="register-button" onClick={register}> Create User</button>
 		</div>
 	);
 }

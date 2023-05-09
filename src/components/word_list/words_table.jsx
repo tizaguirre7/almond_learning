@@ -7,11 +7,15 @@ import {ButtonContext} from "./buttons/addContext"
 import {ButtonSource} from "./buttons/addSource"
 import {ButtonWord} from "./buttons/addWord"
 import queryString from 'query-string';
+import "./css/table.css"
+import "./css/words.css"
 
 import { translateText } from "../translation/translation"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+
+
 
 
 export function Tabla({ datos , contextos, origenes, languages, types, allContexts, allSources, uid }) {
@@ -148,42 +152,42 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
     });
   }, [datos]);
 
-  console.log(datos)
+  console.log(datos);
 
   //--------------------------------------------------------------------------------//
   
     return (
       <>
-        <table>
+
+      <table class="table">
         <thead>
           <tr>
-            <th>Word</th>
-            <th>Date</th>
-            <th>Context</th>
-            <th>Source</th>
-            <th>Translation</th>
-            <th>Speak</th>
+            <th class="table__header">Word</th>
+            <th class="table__header">Date</th>
+            <th class="table__header">Context</th>
+            <th class="table__header">Source</th>
+            <th class="table__header">Translation</th>
+            <th class="table__header">Speak</th>
           </tr>
         </thead>
         <tbody>
           {datos.map((dato, index) => (
-            <tr key={dato.id}>
-              <td>{dato.word}</td>
-              <td>{new Date(dato.date.seconds * 1000).toLocaleString()}</td>
-              <td>{contextos[index].value}</td>
-              <td>{origenes[index].value}</td>
-              <td>{translations[index]}</td>
-              <td>hablar</td>
-              <td>
-                <button onClick={() => handleEdit(dato,dato.id)}>Editar</button>
-                <button onClick={() => handleDelete(dato.id)}>Eliminar</button>
-                <button onClick={() => handleDetails(dato)}>Detalles</button>
-              </td>
-            </tr>
+          <tr key={dato.id} class="table__row">
+            <td class="table__cell">{dato.word}</td>
+            <td class="table__cell">{new Date(dato.date.seconds * 1000).toLocaleString()}</td>
+            <td class="table__cell">{contextos[index].value}</td>
+            <td class="table__cell">{origenes[index].value}</td>
+            <td class="table__cell">{translations[index]}</td>
+            <td class="table__cell">hablar</td>
+            <td class="table__cell">
+              <button class="buttonActions" onClick={() => handleEdit(dato,dato.id)}>Edit</button>
+              <button class="buttonActions" onClick={() => handleDelete(dato.id)}>Delete</button>
+              <button class="buttonActions" onClick={() => handleDetails(dato)}>Details</button>
+            </td>
+          </tr>
           ))}
         </tbody>
       </table>
-
       <div>
             {showModal ? (
                 <div style={modalStyles}>
@@ -242,10 +246,20 @@ export function Tabla({ datos , contextos, origenes, languages, types, allContex
                 </div>
             ) : null}
         </div>
+      
+      <div class="container">
+        <div class = "containerButtons">
+          <ButtonContext class="buttonAdd" uid = {uid}></ButtonContext>
+        </div>
 
-      <ButtonContext uid = {uid}></ButtonContext>
-      <ButtonSource uid = {uid}></ButtonSource>
-      <ButtonWord uid = {uid} allContexts = {allContexts} languages = {languages} allSources = {allSources} types = {types}></ButtonWord>
+        <div class = "containerButtons">
+          <ButtonSource uid = {uid}></ButtonSource>
+        </div>
+
+        <div class = "containerButtons">
+          <ButtonWord uid = {uid} allContexts = {allContexts} languages = {languages} allSources = {allSources} types = {types}></ButtonWord>
+        </div>
+      </div>
       </>
     );
   }

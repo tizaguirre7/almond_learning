@@ -90,14 +90,14 @@ export function Dashboard(props) {
 							{/* Your content */}
 						</div>
 					</main>
-					<h1>bienvenido {userLoaded.name}</h1>
+					<h1>Welcome {userLoaded.name}</h1>
 					<br />
 					<br />
 					<br />
 					<h5>
-						Tu lista de palabras{" "}
+						Your vocab list {" "}
 						<Link className="text-primary" to="../dashboard/list">
-							Aqui
+							Here
 						</Link>
 					</h5>
 					<br />

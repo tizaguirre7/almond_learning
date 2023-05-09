@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { addDocToCollection } from "./../../crud/GeneralCRUD";
 import { auth, db } from "../../../firebase-config";
 import { doc, collection ,updateDoc, serverTimestamp ,deleteField, addDoc, Timestamp ,getDoc,getDocs, setDoc, FieldValue, FieldPath, query, where, arrayUnion, arrayRemove} from "firebase/firestore";
-
+import "./../css/words.css"
 
 export function ButtonSource({uid}){
     const [showModal, setShowModal] = useState(false);
@@ -88,7 +88,7 @@ export function ButtonSource({uid}){
     return(
         <>
         <div>
-            <button onClick={handleOpenModal}>Añadir origen</button>
+            <button class = "buttonAdd"  onClick={handleOpenModal}>Add source</button>
             {showModal ? (
                 <div style={modalStyles}>
                 <div style={modalContentStyles}>

@@ -8,6 +8,7 @@ import {
 import { auth, db } from "../../firebase-config";
 import { Link, useNavigate } from "react-router-dom";
 import { getDoc, doc } from "firebase/firestore";
+import "./login.css"
 
 import almondImage from "../../assets/Almond.png";
 
@@ -59,36 +60,39 @@ export function Login() {
 	};
 
 	return (
-		<div>
-			<img src={almondImage} alt="imagen no disponible"></img>
+		<div class = "login">
+			<img class= "imgLogin" src={almondImage} alt="imagen no disponible"></img>
 
 			<div>
 				<h3> Login </h3>
 				<input
+					class = "inputLogin"
 					placeholder="Email..."
 					onChange={(event) => {
 						setLoginEmail(event.target.value);
 					}}
 				/>
 				<input
+					class = "inputLogin"
+					type = "password"
 					placeholder="Password..."
 					onChange={(event) => {
 						setLoginPassword(event.target.value);
 					}}
 				/>
 
-				<button onClick={login}> Login</button>
+				<button class = "buttonLogin" onClick={login}> Login</button>
 			</div>
 
 			<h4>Don't have an account?</h4>
 			<h5>
-				Register <Link to="../register">here</Link>
+				Register <Link to="../register"><button>here</button></Link>
 			</h5>
 
 			<h4> User Logged In: </h4>
 			{user?.uid}
 
-			<button onClick={handleLogout}> Sign Out </button>
+			<button class = "buttonLogin" onClick={handleLogout}> Sign Out </button>
 		</div>
 	);
 }
