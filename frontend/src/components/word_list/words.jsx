@@ -186,21 +186,21 @@ export function Words(props){
 
                 <form class="filter-form" onSubmit={handleSubmit}>
                 <select class="filter-select" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
-                    <option disabled defaultValue>Select a Word Type</option>
+                    <option disabled selected>Select a Word Type</option>
                     {allTypes.map((type) => (
                     <option key={type.type} value={type.id}>{type.type}</option>
                     ))}
                 </select>
 
                 <select class="filter-select" value={selectedContext} onChange={(e) => setSelectedContext(e.target.value)}>
-                    <option disabled defaultValue>Select a Context</option>
+                    <option disabled selected>Select a Context</option>
                     {allContexts.map((context) => (
                     <option key={context.value} value={context.id}>{context.value}</option>
                     ))}
                 </select>
 
                 <select class="filter-select" value={selectedSource} onChange={(e) => setSelectedSource(e.target.value)}>
-                    <option disabled defaultValue>Select a Source</option>
+                    <option disabled selected value="">Select a Word Type</option>
                     {allSources.map((sources) => (
                     <option key={sources.value} value={sources.id}>{sources.value}</option>
                     ))}

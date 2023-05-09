@@ -54,22 +54,26 @@ export function Details(){
       return(
         <>
         <Navbar></Navbar>
-          <div className="container my-5">
-            <h1 className="display-4">{wordDetails.word}</h1>
-            <hr className="my-4" />
-            <div className="row">
-          <div className="col-lg-6">
-            <h2>Details</h2>
-            <p><strong>Language:</strong> {wordDetails.language.id}</p>
-            <p><strong>Example:</strong> {wordDetails.example}</p>
-            <p><strong>Type:</strong> {wordDetails.type.id}</p>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h1>{wordDetails.word}</h1>
+              <hr/>
+              <div class="row">
+                <div class="col-md-6">
+                  <h2>Details</h2>
+                  <p><strong>Language:</strong> {wordDetails.language.id}</p>
+                  <p><strong>Example:</strong> {wordDetails.example}</p>
+                  <p><strong>Type:</strong> {wordDetails.type.id}</p>
+                </div>
+                <div class="col-md-6">
+                  <h2>Source</h2>
+                  <p><strong>Context:</strong> {wordContext.value}</p>
+                  <p><strong>Source:</strong> {wordSource.value}</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="col-lg-6">
-            <h2>Source</h2>
-            <p><strong>Context:</strong> {wordContext.value}</p>
-            <p><strong>Source:</strong> {wordSource.value}</p>
-          </div>
-        </div>
       </div>
         </>
       );
